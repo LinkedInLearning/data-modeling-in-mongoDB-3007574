@@ -1,34 +1,51 @@
 # Data Modeling in MongoDB
-This is the repository for the LinkedIn Learning course `Data Modeling in MongoDB`. The full course is available from [LinkedIn Learning][lil-course-url].
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+## Challenge 2
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+You will be refactoring the data model for an e-commerce website.
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+Specifically, we'll be modeling sub-documents, potentially breaking things down into separate collections, and mapping relationships.
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+As a reminder, here are the 3 pages of the application that we're focusing on:
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+### Wish List
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+A wish list where the users can add products that they’re “keeping an eye on” but aren’t in their cart (yet)
 
+<img src="wireframe-wish-list.png" width="600" />
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+## Shopping Cart
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+Contains the items the user intends to purchase, with a running total price.
 
+<img src="wireframe-wish-list.png" width="600" />
+
+### Orders History
+
+Users can browse and view view their previous orders, with the most recent ones showing first.
+
+<img src="wireframe-history.png" width="600" />
+
+## Tasks
+
+- Refactor your Customer Collection
+- Identify and model any sub-documents
+- Identify and model any new collections required
+- Identify and create any external references
+- Make use of summary fields and eager loading where you can
+- Provide your solution in JSON format, with sample data, as shown below
+
+> Example
+
+```json
+Car
+{
+  year: 1986,
+  make: “Toyota”,
+  model: “Celica”,
+  trim: “GT”
+  transmission: “Manual”,
+  color: “Black”,
+  options: [ “Louvers”, “Fuzzy Dice”, “Shag Carpet” ]
+}
+```
