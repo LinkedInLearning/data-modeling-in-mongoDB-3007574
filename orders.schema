@@ -1,0 +1,65 @@
+db.createCollection('orders',
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'orders',
+      required: ['customer_id', 'products'
+      ],
+      properties: {
+        customer_id: {
+          bsonType: 'objectId'
+        },
+        total: {
+          bsonType: 'decimal'
+        },
+        products: {
+          bsonType: 'array',
+          items: {
+            title: 'product',
+            properties: {
+              product_id: {
+                bsonType: 'objectId'
+              },
+              name: {
+                bsonType: 'string'
+              },
+              description: {
+                bsonType: 'string'
+              },
+              price: {
+                bsonType: 'decimal'
+              },
+              shipping: {
+                bsonType: 'decimal'
+              }
+            }
+          }
+        },
+        shipping_address: {
+          bsonType: 'object',
+          title: 'address',
+          required: ['name', 'address', 'city', 'state', 'zip'
+          ],
+          properties: {
+            name: {
+              bsonType: 'string'
+            },
+            address: {
+              bsonType: 'string'
+            },
+            city: {
+              bsonType: 'string'
+            },
+            state: {
+              bsonType: 'string'
+            },
+            zip: {
+              bsonType: 'string'
+            }
+          }
+        }
+      }
+    }
+  }
+});

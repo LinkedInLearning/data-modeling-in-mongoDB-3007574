@@ -1,34 +1,298 @@
 # Data Modeling in MongoDB
-This is the repository for the LinkedIn Learning course `Data Modeling in MongoDB`. The full course is available from [LinkedIn Learning][lil-course-url].
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+## Challenge 3: Solution
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+Below is one possible solution for modeling the data required for the 3 pages for the e-commerce application
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+### Entity Relation Diagram (ERD)
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+<img src="erd.png" width="600" />
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+### customers.schema
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+```javascript
+db.createCollection('customers',
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'customers',
+      required: ['name', 'hair', 'age'
+      ],
+      properties: {
+        name: {
+          bsonType: 'string'
+        },
+        hair: {
+          enum: [
+            "Black",
+            "Blonde",
+            "Red",
+            "Brown",
+            "Grey"
+          ]
+        },
+        age: {
+          bsonType: 'int'
+        },
+        addresses: {
+          bsonType: 'array',
+          items: {
+            title: 'address',
+            required: ['name', 'address', 'city', 'state', 'zip'
+            ],
+            properties: {
+              name: {
+                bsonType: 'string'
+              },
+              address: {
+                bsonType: 'string'
+              },
+              city: {
+                bsonType: 'string'
+              },
+              state: {
+                bsonType: 'string'
+              },
+              zip: {
+                bsonType: 'string'
+              }
+            }
+          }
+        },
+        wish_list: {
+          bsonType: 'array',
+          items: {
+            title: 'product',
+            properties: {
+              product_id: {
+                bsonType: 'objectId'
+              },
+              name: {
+                bsonType: 'string'
+              },
+              description: {
+                bsonType: 'string'
+              },
+              price: {
+                bsonType: 'decimal'
+              },
+              shipping: {
+                bsonType: 'decimal'
+              }
+            }
+          }
+        },
+        cart: {
+          bsonType: 'object',
+          title: 'cart',
+          properties: {
+            num_items: {
+              bsonType: 'int'
+            },
+            running_total: {
+              bsonType: 'decimal'
+            },
+            items: {
+              bsonType: 'array',
+              items: {
+                title: 'product',
+                properties: {
+                  product_id: {
+                    bsonType: 'objectId'
+                  },
+                  name: {
+                    bsonType: 'string'
+                  },
+                  description: {
+                    bsonType: 'string'
+                  },
+                  price: {
+                    bsonType: 'decimal'
+                  },
+                  shipping: {
+                    bsonType: 'decimal'
+                  }
+                }
+              }
+            }
+          }
+        },
+        last_5_orders: {
+          bsonType: 'array',
+          items: {
+            bsonType: 'object'
+          }
+        }
+      }
+    }
+  }
+});
+```
+
+### products.schema
+
+```javascript
+db.createCollection('products',
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'products',
+      properties: {
+        num_in_stock: {
+          bsonType: 'int'
+        },
+        details: {
+          bsonType: 'object',
+          title: 'product',
+          properties: {
+            product_id: {
+              bsonType: 'objectId'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            description: {
+              bsonType: 'string'
+            },
+            price: {
+              bsonType: 'decimal'
+            },
+            shipping: {
+              bsonType: 'decimal'
+            }
+          }
+        }
+      }
+    }
+  }
+});
+```
+
+### orders.schema
+
+```javascript
+db.createCollection('orders',
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'orders',
+      required: ['customer_id', 'products'
+      ],
+      properties: {
+        customer_id: {
+          bsonType: 'objectId'
+        },
+        total: {
+          bsonType: 'decimal'
+        },
+        products: {
+          bsonType: 'array',
+          items: {
+            title: 'product',
+            properties: {
+              product_id: {
+                bsonType: 'objectId'
+              },
+              name: {
+                bsonType: 'string'
+              },
+              description: {
+                bsonType: 'string'
+              },
+              price: {
+                bsonType: 'decimal'
+              },
+              shipping: {
+                bsonType: 'decimal'
+              }
+            }
+          }
+        },
+        shipping_address: {
+          bsonType: 'object',
+          title: 'address',
+          required: ['name', 'address', 'city', 'state', 'zip'
+          ],
+          properties: {
+            name: {
+              bsonType: 'string'
+            },
+            address: {
+              bsonType: 'string'
+            },
+            city: {
+              bsonType: 'string'
+            },
+            state: {
+              bsonType: 'string'
+            },
+            zip: {
+              bsonType: 'string'
+            }
+          }
+        }
+      }
+    }
+  }
+});
+```
+
+### Mongoose Model
+
+If you are a JavaScript developer and attempted to model this set of collections in Mongoose, here's what your model might look like:
+
+> Note that while Mongoose does a great job with simple relationships, if your references are deeply nested as they are here (`customer.cart.items[0].product`) then you'll need another library to assist with the auto-population process of those joins. Check out [mongoose-deep-populate](https://www.npmjs.com/package/mongoose-deep-populate) to see this in action
+
+```javascript
+'use strict';
+
+const mongoose = require('mongoose');
+
+const addressModel = new mongoose.Schema({
+  name: { type: String, required: true },
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  zip: { type: String, required: true },
+});
+
+const productModel = new mongoose.Schema({
+  name: { type: String },
+  description: { type: String },
+  num_in_stock: { type: Number },
+  price: { type: Number },
+  shipping: { type: Number }
+})
+
+const ordersModel = new mongoose.Schema({
+  customer: { type: mongoose.Schema.Types.ObjectId, ref: 'customers' },
+  items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'products' }]
+});
+
+const customerModel = new mongoose.Schema({
+  name: { type: String, required: true },
+  addresses: [addressModel],
+  cart: {
+    num_items: { type: Number },
+    items: [
+      {
+        name: { type: String },
+        price: { type: Number },
+        product: { type: mongoose.Schema.Types.ObjectId, ref: 'products' },
+      }
+    ]
+  },
+  wish_list: [productModel],
+  last_5_orders: [ordersModel]
+});
 
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+const Customers = mongoose.model('customers', customerModel);
+const Orders = mongoose.model('orders', ordersModel);
 
+module.exports = { Customers, Orders };
+```

@@ -1,0 +1,117 @@
+db.createCollection('customers',
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'customers',
+      required: ['name', 'hair', 'age'
+      ],
+      properties: {
+        name: {
+          bsonType: 'string'
+        },
+        hair: {
+          enum: [
+            "Black",
+            "Blonde",
+            "Red",
+            "Brown",
+            "Grey"
+          ]
+        },
+        age: {
+          bsonType: 'int'
+        },
+        addresses: {
+          bsonType: 'array',
+          items: {
+            title: 'address',
+            required: ['name', 'address', 'city', 'state', 'zip'
+            ],
+            properties: {
+              name: {
+                bsonType: 'string'
+              },
+              address: {
+                bsonType: 'string'
+              },
+              city: {
+                bsonType: 'string'
+              },
+              state: {
+                bsonType: 'string'
+              },
+              zip: {
+                bsonType: 'string'
+              }
+            }
+          }
+        },
+        wish_list: {
+          bsonType: 'array',
+          items: {
+            title: 'product',
+            properties: {
+              product_id: {
+                bsonType: 'objectId'
+              },
+              name: {
+                bsonType: 'string'
+              },
+              description: {
+                bsonType: 'string'
+              },
+              price: {
+                bsonType: 'decimal'
+              },
+              shipping: {
+                bsonType: 'decimal'
+              }
+            }
+          }
+        },
+        cart: {
+          bsonType: 'object',
+          title: 'cart',
+          properties: {
+            num_items: {
+              bsonType: 'int'
+            },
+            running_total: {
+              bsonType: 'decimal'
+            },
+            items: {
+              bsonType: 'array',
+              items: {
+                title: 'product',
+                properties: {
+                  product_id: {
+                    bsonType: 'objectId'
+                  },
+                  name: {
+                    bsonType: 'string'
+                  },
+                  description: {
+                    bsonType: 'string'
+                  },
+                  price: {
+                    bsonType: 'decimal'
+                  },
+                  shipping: {
+                    bsonType: 'decimal'
+                  }
+                }
+              }
+            }
+          }
+        },
+        last_5_orders: {
+          bsonType: 'array',
+          items: {
+            bsonType: 'object'
+          }
+        }
+      }
+    }
+  }
+});

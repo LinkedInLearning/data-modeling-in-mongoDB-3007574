@@ -1,0 +1,35 @@
+db.createCollection('products',
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'products',
+      properties: {
+        num_in_stock: {
+          bsonType: 'int'
+        },
+        details: {
+          bsonType: 'object',
+          title: 'product',
+          properties: {
+            product_id: {
+              bsonType: 'objectId'
+            },
+            name: {
+              bsonType: 'string'
+            },
+            description: {
+              bsonType: 'string'
+            },
+            price: {
+              bsonType: 'decimal'
+            },
+            shipping: {
+              bsonType: 'decimal'
+            }
+          }
+        }
+      }
+    }
+  }
+});
