@@ -1,0 +1,47 @@
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "phone": "333-555-1212",
+  "cart": {
+    "items_in_cart": 3,
+    "runningTotal": 325.00,
+    "items": [
+      {
+        "quantity": 2,
+        "product": ObjectId(111)
+      },
+      {
+        "quantity": 1,
+        "product": ObjectId(222)
+      }
+    ]
+  },
+  "wishlist": [
+    {
+      "product_id": ObjectId(12),
+      "name": "Toaster",
+      "description": "makes toast",
+      "price": 200.00
+    },
+    {},
+    {}
+  ],
+  "last_5_orders": [
+    {
+      "order_id": 1,
+      "date": "2021-10-31",
+      "items": [
+        {
+          "product_id": ObjectId(222),
+          "quantity": 1,
+          "product": {
+            "name": "Toaster",
+            "description": "makes toast",
+            "price": 200.00
+          },
+          {},
+          {}
+        ]
+      }
+    ]
+  }

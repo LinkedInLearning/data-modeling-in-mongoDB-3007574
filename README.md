@@ -1,34 +1,124 @@
 # Data Modeling in MongoDB
-This is the repository for the LinkedIn Learning course `Data Modeling in MongoDB`. The full course is available from [LinkedIn Learning][lil-course-url].
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+## Challenge 2: Solution
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+Below is one possible solution for modeling the data required for the 3 pages for the e-commerce application
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+### customers.json
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+- Linking out to the items in the cart. Because the price and quantity on hand change frequently, it's safer to make this a reference.
+- We can still use the summary information in this object to draw the cart icon
+- Wishlist is mainly unchanged, but it does carry a reference to the product so we can let the user dig in for more information
+- Notice the new `last_5_orders` property
+  - We use this, with some knowingly duplicated data, as a way to service the primary use case, and allow for fetching the full set of orders on demand
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+```json
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "phone": "333-555-1212",
+  "cart": {
+    "items_in_cart": 3,
+    "runningTotal": 325.00,
+    "items": [
+      {
+        "quantity": 2,
+        "product": ObjectId(111)
+      },
+      {
+        "quantity": 1,
+        "product": ObjectId(222)
+      }
+    ]
+  },
+  "wishlist": [
+    {
+      "product_id": ObjectId(12),
+      "name": "Toaster",
+      "description": "makes toast",
+      "price": 200.00
+    },
+    {},
+    {}
+  ],
+  "last_5_orders": [
+    {
+      "order_id": 1,
+      "date": "2021-10-31",
+      "items": [
+        {
+          "product_id": ObjectId(222),
+          "quantity": 1,
+          "product": {
+            "name": "Toaster",
+            "description": "makes toast",
+            "price": 200.00
+          },
+          {},
+          {}
+        ]
+      }
+    ]
+  }
+```
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+### products.json
 
+New collection: `products`
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+```json
+{
+  "product_id": ObjectId(12),
+  "name": "Toaster",
+  "description": "makes toast",
+  "price": 200.00,
+  "shipping_cost": 10.00,
+  "in_stock": 100000,
+  "options": [
+    {
+      "colors": [
+        "Silver",
+        "Black"
+      ]
+    }
+  ]
+}
+```
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+### orders.json
 
+New collection: `orders`
+
+- Note that although we link to the product, we also store the data from the product
+- Duplication ... yes.
+  - We know that the product price may change, BUT, at the time of the order, this was the price, so it's ok to store all information here
+  - It's a faster lookup for non-volatile data. No need to re-fetch
+
+```json
+{
+  "order_id": 12,
+  "customer_id": ObjectId(123),
+  "date": 2021-10-31,
+  "items": [
+    {
+      "product_id": ObjectId(111),
+      "quantity": 1,
+      "product": {
+        "name": "Toaster",
+        "description": "makes toast",
+        "price": 200.00
+      }
+    },
+    {},
+    {}
+  ]
+}
+```
+
+## Raw Documents
+
+[customers.json](customers.json)
+
+[products.json](products.json)
+
+[orders.json](orders.json)

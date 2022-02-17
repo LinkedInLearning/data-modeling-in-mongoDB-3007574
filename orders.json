@@ -1,0 +1,18 @@
+{
+  "order_id": 12,
+  "customer_id": ObjectId(123),
+  "date": 2021-10-31,
+  "items": [
+    {
+      "product_id": ObjectId(111),
+      "quantity": 1,
+      "product": {
+        "name": "Toaster",
+        "description": "makes toast",
+        "price": 200.00
+      }
+    },
+    {},
+    {}
+  ]
+}
