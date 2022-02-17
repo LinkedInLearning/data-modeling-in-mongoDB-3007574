@@ -1,0 +1,16 @@
+{
+  "product_id": ObjectId(2222),
+  "name": "Toaster",
+  "description": "makes toast",
+  "price": 200.00,
+  "shipping_cost": 10.00,
+  "in_stock": 100000,
+  "options": [
+    {
+      "colors": [
+        "Silver",
+        "Black"
+      ]
+    }
+  ]
+}

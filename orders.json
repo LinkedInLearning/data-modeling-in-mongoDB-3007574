@@ -1,0 +1,15 @@
+{
+  "order_id": 12,
+  "customer_id": ObjectId(1234),
+  "date": "",
+  "items": [
+    {
+      "product_id": ObjectId(2222),
+      "name": "Toaster",
+      "description": "makes toast",
+      "price": 200.00
+    },
+    {},
+    {}
+  ]
+}
