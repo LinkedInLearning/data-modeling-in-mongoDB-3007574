@@ -1,20 +1,3 @@
-# Data Modeling in MongoDB
-
-## Challenge 1: Solution
-
-Below is one possible solution for modeling the data required for the 3 pages for the e-commerce application
-
-Of note:
-
-- The `wishlist` is an array of product objects
-- The `cart` is also an array of product objects
-  - Additional property: `quantity`
-- Orders is an array of Order Objects
-  - Within each order, is an `items` array, each element of which is a product object
-
-The "product objects" all look relatively similar, although each is slightly tailored to it's specific use case in the application.
-
-```json
 {
   "name": "Jane Customer",
   "email": "jane@example.com",
@@ -53,8 +36,3 @@ The "product objects" all look relatively similar, although each is slightly tai
     }
   ]
 }
-```
-
-## Raw Document
-
-[customers.json](customers.json)
