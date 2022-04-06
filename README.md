@@ -1,7 +1,10 @@
 # Data Modeling in MongoDB
-This is the repository for the LinkedIn Learning course `Data Modeling in MongoDB`. The full course is available from [LinkedIn Learning][lil-course-url].
+This is the repository for the LinkedIn Learning course Data Modeling in MongoDB. The full course is available from [LinkedIn Learning][lil-course-url].
 
-_See the readme file in the main branch for updated instructions and information._
+![Data Modeling in MongoDB][lil-thumbnail-url] 
+
+MongoDB is a leading noSQL database that stores data in documents or collections, which is very different from the relational or SQL databases that most data developers are familiar with. In this course, instructor John Cokos explores ways to use MongoDB at scale with complex data modeling techniques and cloud deployments. As a means of demonstrating the complexities of modeling real-world data with MongoDB, John works through the process of setting up an application resembling a social media website, and shows you how to model frequently used, deeply nested, and shared data sources to support an enterprise-level application. John also presents a series of challenges and solutions, so you can test your learning along the way.
+
 ## Instructions
 This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
 
@@ -20,15 +23,15 @@ To resolve this issue:
     Add changes to git using this command: git add .
 	Commit changes using this command: git commit -m "some message"
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+### Instructor
+
+John Cokos 
+                            
 
 
-[0]: # (Replace these placeholder URLs with actual course URLs)
+                            
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: http://
+Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/john-cokos).
 
+[lil-course-url]: https://www.linkedin.com/learning/data-modeling-in-mongodb
+[lil-thumbnail-url]: https://cdn.lynda.com/course/3007574/3007574-1649089836042-16x9.jpg
